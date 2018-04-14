@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
-import {FormArray, FormGroup} from '@angular/forms';
-import {log} from 'util';
 import {HttpClient} from '@angular/common/http';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-root',
@@ -15,15 +14,14 @@ import {HttpClient} from '@angular/common/http';
 
 export class AppComponent implements OnInit {
   items: Observable<any[]>;
-  name: string;
-  message: string;
-  time: Date = new Date();
+  name: string = 'Juan';
+  message: string = 'Message';
+  time: Date;
 
   constructor(public db: AngularFirestore,
               private httpClient:HttpClient) {
-    db.collection('messages', ref => ref.orderBy('date','desc'));
-
-    this.items = db.collection('messages').valueChanges();
+    const query = ref => ref.orderBy('date','asc');
+    this.items = db.collection('messages', query).valueChanges();
 
   }
 
@@ -31,12 +29,14 @@ export class AppComponent implements OnInit {
   }
 
   sendMessage(){
+    this.time = firebase.firestore.FieldValue.serverTimestamp();
+    console.log(this.time);
     this.db.collection('messages').add({
       name: this.name,
       message: this.message,
       date: this.time
     });
-    this.message ='';
+    //is.message ='';
     console.log(this.name, this.message);
   }
 }
