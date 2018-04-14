@@ -17,9 +17,12 @@ export class AppComponent implements OnInit {
   items: Observable<any[]>;
   name: string;
   message: string;
+  time: Date = new Date();
 
   constructor(public db: AngularFirestore,
               private httpClient:HttpClient) {
+    db.collection('messages', ref => ref.orderBy('date','desc'));
+
     this.items = db.collection('messages').valueChanges();
 
   }
@@ -30,7 +33,8 @@ export class AppComponent implements OnInit {
   sendMessage(){
     this.db.collection('messages').add({
       name: this.name,
-      message: this.message
+      message: this.message,
+      date: this.time
     });
     this.message ='';
     console.log(this.name, this.message);
