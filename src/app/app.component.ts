@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import * as firebase from 'firebase/app';
-
-
-import {AuthService} from './shared/auth.service';
+import {AngularFirestore} from 'angularfire2/firestore';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',
@@ -12,22 +9,18 @@ import {AuthService} from './shared/auth.service';
 })
 
 
+
 export class AppComponent implements OnInit {
-  topics: FirebaseListObservable<any[]>;
-  user = null;
+  items: Observable<any[]>;
 
 
   constructor(
-    private auth: AuthService, public db: AngularFireDatabase) { }
+    public db: AngularFirestore) {
+    this.items = db.collection('messages').valueChanges();
 
-  loginWithGoogle() {
-    this.auth.loginWithGoogle();
   }
 
-
   ngOnInit() {
-    this.auth.getAuthState().subscribe(
-      (user) => this.user = user);
   }
 }
 
