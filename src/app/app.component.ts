@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   items: Observable<any[]>;
   name: string = 'Juan';
   message: string = 'Message';
-  time: Date;
+  time: any ;
 
   constructor(public db: AngularFirestore,
               private httpClient:HttpClient) {
