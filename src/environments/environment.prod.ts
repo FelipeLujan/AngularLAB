@@ -7,4 +7,5 @@ export const environment = {
     projectId: "angular-60b1f",
     storageBucket: "angular-60b1f.appspot.com",
     messagingSenderId: "802018741548"
+  }
 };
