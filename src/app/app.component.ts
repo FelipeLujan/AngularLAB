@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       message: this.message,
       date: this.time
     });
-    //is.message ='';
+    this.message ='';
     console.log(this.name, this.message);
   }
 }
