@@ -14,8 +14,8 @@ import * as firebase from 'firebase';
 
 export class AppComponent implements OnInit {
   items: Observable<any[]>;
-  name: string = 'Juan';
-  message: string = 'Message';
+  name: String = '';
+  message: String = '';
   time: any ;
 
   constructor(public db: AngularFirestore,
